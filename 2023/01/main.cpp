@@ -2,7 +2,6 @@
 #include <string>
 #include <vector>
 #include <fstream>
-#include <unordered_map>
 
 int main()
 {
@@ -58,43 +57,45 @@ int main()
 
 		for (int j = 0; j < 10; j++)
 		{
-			if (first == -1 && input[i].find(numbers[j]) != std::string::npos)
+			std::string number = numbers[j];
+			if (first == -1 && input[i].find(number) != std::string::npos)
 			{
 				first = j;
-				lastPos = input[i].find(numbers[j]);
+				lastPos = input[i].find(number);
 				firstPos = lastPos;
 				last = j;
 			}
-			if (input[i].find(numbers[j]) < firstPos)
+			if (input[i].find(number) < firstPos)
 			{
-				firstPos = input[i].find(numbers[j]);
+				firstPos = input[i].find(number);
 				first = j;
 			}
-			if (input[i].rfind(numbers[j]) > lastPos && input[i].rfind(numbers[j]) != std::string::npos)
+			if (input[i].rfind(number) > lastPos && input[i].rfind(number) != std::string::npos)
 			{
-				lastPos = input[i].rfind(numbers[j]);
+				lastPos = input[i].rfind(number);
 				last = j;
 			}
 		}
 
 		for (int ch = 0; ch < input[i].size(); ch++)
 		{
-			if (isdigit(input[i][ch]))
+			char currentCharacter = input[i][ch];
+			if (isdigit(currentCharacter))
 			{
 				if (first == -1)
 				{
-					first = input[i][ch] - '0';
-					last = input[i][ch] - '0';
+					first = currentCharacter - '0';
+					last = currentCharacter - '0';
 				}
 				else if (ch > lastPos)
 				{
-					last = input[i][ch] - '0';
 					lastPos = ch;
+					last = currentCharacter - '0';
 				}
 				else if (ch < firstPos)
 				{
 					firstPos = ch;
-					first = input[i][ch] - '0';
+					first = currentCharacter - '0';
 				}
 			}
 		}
