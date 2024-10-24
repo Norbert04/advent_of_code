@@ -69,7 +69,7 @@ int main()
 		return -1;
 	}
 
-	unsigned int lowerstLocationNumber = UINT32_MAX;
+	unsigned int lowestLocationNumber = UINT32_MAX;
 
 	for (unsigned int seed : seeds)
 	{
@@ -80,22 +80,16 @@ int main()
 		unsigned int temperature = convert(light, conversions[lightTemperature]);
 		unsigned int humidity = convert(temperature, conversions[temperatureHumidity]);
 		unsigned int location = convert(humidity, conversions[humidityLocation]);
-		if (location < lowerstLocationNumber)
-		{
-			lowerstLocationNumber = location;
-		}
+		if (location < lowestLocationNumber)
+			lowestLocationNumber = location;
 	}
-	std::cout << lowerstLocationNumber << "\n";
+	std::cout << lowestLocationNumber << "\n";
 }
 
 unsigned int convert(unsigned int value, std::vector<range> map)
 {
 	for (range currentRange : map)
-	{
 		if (value > currentRange.sourceStart && value < currentRange.sourceStart + currentRange.length)
-		{
 			return value + (currentRange.destinationStart - currentRange.sourceStart);
-		}
-	}
 	return value;
 }
